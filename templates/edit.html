@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Edit Document — {{ app_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page">
+    <p>
+      <a href="/">QuillQR</a>
+    </p>
+
+    <section class="card">
+      <h1>Edit Document</h1>
+
+      <p>
+        Public link:
+        <a href="{{ public_url }}">{{ public_url }}</a>
+      </p>
+
+      <p class="warning">
+        Opening this secret edit link renews the document
+        for another 90 days.
+      </p>
+
+      <label>
+        Title
+        <input
+          id="title"
+          type="text"
+          maxlength="120"
+          value="{{ document['title'] }}"
+        >
+      </label>
+
+      <label>
+        Format
+        <select id="content-format">
+          <option
+            value="text"
+            {% if document["content_format"] == "text" %}
+              selected
+            {% endif %}
+          >
+            Plain text
+          </option>
+          <option
+            value="markdown"
+            {% if document["content_format"] == "markdown" %}
+              selected
+            {% endif %}
+          >
+            Markdown
+          </option>
+        </select>
+      </label>
+
+      <label>
+        Content
+        <textarea id="content" rows="14">{{ document["content"] }}</textarea>
+      </label>
+
+      <button id="save-button">
+        Save Changes
+      </button>
+
+      <p id="status" class="status"></p>
+    </section>
+  </main>
+
+  <script>
+    window.QUILLQR_EDIT_TOKEN = {{ edit_token | tojson }};
+  </script>
+  <script src="/static/edit.js"></script>
+</body>
+</html>

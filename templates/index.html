@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ app_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page">
+    <h1>QuillQR</h1>
+    <p class="tagline">
+      Simple QR documents without accounts.
+    </p>
+
+    <section class="card">
+      <h2>Create stored document</h2>
+
+      <label>
+        Title
+        <input id="title" type="text" maxlength="120">
+      </label>
+
+      <label>
+        Format
+        <select id="content-format">
+          <option value="text">Plain text</option>
+          <option value="markdown">Markdown</option>
+        </select>
+      </label>
+
+      <label>
+        Content
+        <textarea
+          id="content"
+          rows="14"
+          placeholder="Paste your document text here..."
+        ></textarea>
+      </label>
+
+      <p id="size-note">
+        Max content size:
+        {{ max_content_bytes }} bytes
+      </p>
+
+      <button id="create-button">
+        Create Document
+      </button>
+
+      <p id="status" class="status"></p>
+    </section>
+
+	<section id="result" class="card hidden">
+	  <h2>Created</h2>
+
+	  <p>
+		Public link:
+		<a id="public-link" href=""></a>
+	  </p>
+
+	  <div class="qr-panel">
+		<h3>QR Code</h3>
+
+		<div id="qr-code" class="qr-code"></div>
+
+		<button id="download-qr-button" type="button">
+		  Download QR PNG
+		</button>
+	  </div>
+
+	  <p>
+		Secret edit link:
+		<a id="edit-link" href=""></a>
+	  </p>
+
+	  <p class="warning">
+		Save the secret edit link. Anyone with it can edit
+		this document. If you lose it, the document can still
+		be viewed but cannot be edited.
+	  </p>
+	</section>
+  </main>
+
+	<script
+	  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+	></script>
+	<script src="/static/app.js"></script>
+</body>
+</html>

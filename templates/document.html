@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% if document["title"] %}
+      {{ document["title"] }} — {{ app_name }}
+    {% else %}
+      {{ app_name }}
+    {% endif %}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page">
+    <p>
+      <a href="/">QuillQR</a>
+    </p>
+
+    <article class="card">
+      {% if document["title"] %}
+        <h1>{{ document["title"] }}</h1>
+      {% else %}
+        <h1>Untitled Document</h1>
+      {% endif %}
+
+      <p class="meta">
+        Format: {{ document["content_format"] }}
+      </p>
+
+      <pre class="document-content">{{ document["content"] }}</pre>
+    </article>
+  </main>
+</body>
+</html>
