@@ -87,3 +87,38 @@ pre.document-content {
 #download-qr-button {
   margin-top: 1rem;
 }
+.document-content {
+  overflow-wrap: anywhere;
+}
+
+.plain-text-content {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.markdown-content {
+  line-height: 1.6;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  line-height: 1.2;
+}
+
+.markdown-content pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, CanvasText 8%, Canvas);
+}
+
+.markdown-content code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.markdown-content blockquote {
+  margin-left: 0;
+  padding-left: 1rem;
+  border-left: 0.25rem solid color-mix(in srgb, CanvasText 25%, Canvas);
+}
