@@ -64,7 +64,9 @@ pre.document-content {
 
 .hidden {
   display: none;
-}.qr-panel {
+}
+
+.qr-panel {
   margin: 1rem 0;
 }
 

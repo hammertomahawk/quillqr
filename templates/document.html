@@ -31,6 +31,30 @@
 
       <pre class="document-content">{{ document["content"] }}</pre>
     </article>
+
+	<section
+	  class="card qr-panel"
+	  data-qr-payload="{{ public_url }}"
+	  data-qr-name="quillqr-document-qr.png"
+	>
+	  <h2>Share this document</h2>
+
+	  <p>
+		Public link:
+		<a href="{{ public_url }}">{{ public_url }}</a>
+	  </p>
+
+	  <div class="qr-code"></div>
+
+	  <button class="download-qr-button" type="button">
+		Download QR PNG
+	  </button>
+	</section>
   </main>
+
+	<script
+	  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+	></script>
+	<script src="/static/page_qr.js"></script>
 </body>
 </html>

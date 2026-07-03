@@ -68,11 +68,29 @@
 
       <p id="status" class="status"></p>
     </section>
+
+	<div
+	  class="qr-panel"
+	  data-qr-payload="{{ public_url }}"
+	  data-qr-name="quillqr-document-qr.png"
+	>
+	  <h2>Public QR Code</h2>
+
+	  <div class="qr-code"></div>
+
+	  <button class="download-qr-button" type="button">
+		Download QR PNG
+	  </button>
+	</div>
   </main>
 
   <script>
     window.QUILLQR_EDIT_TOKEN = {{ edit_token | tojson }};
   </script>
-  <script src="/static/edit.js"></script>
+	<script
+	  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+	></script>
+	<script src="/static/page_qr.js"></script>
+	<script src="/static/edit.js"></script>
 </body>
 </html>

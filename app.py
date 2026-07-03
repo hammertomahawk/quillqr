@@ -333,6 +333,7 @@ def register_routes(app: Flask) -> None:
             "document.html",
             app_name=APP_NAME,
             document=row,
+            public_url=public_document_url(row["read_slug"]),
         )
 
     @app.get("/e/<edit_token>")
