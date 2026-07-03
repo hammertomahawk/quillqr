@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from werkzeug.middleware.proxy_fix import ProxyFix
+
 import hashlib
 import os
 import secrets
@@ -50,6 +52,13 @@ def create_app() -> Flask:
     )
 
     app.teardown_appcontext(close_db)
+
+    app.wsgi_app = ProxyFix(
+        app.wsgi_app,
+        x_for=1,
+        x_proto=1,
+        x_host=1,
+    )
 
     register_routes(app)
 
