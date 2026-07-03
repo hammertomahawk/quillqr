@@ -13,7 +13,6 @@ from flask import (
     Flask,
     abort,
     jsonify,
-    redirect,
     render_template,
     request,
     url_for,
@@ -403,6 +402,7 @@ def register_routes(app: Flask) -> None:
             document=refreshed,
             edit_token=edit_token,
             public_url=public_document_url(row["read_slug"]),
+            max_content_bytes=MAX_CONTENT_BYTES,
         )
 
     @app.put("/api/edit/<edit_token>")

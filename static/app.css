@@ -87,6 +87,7 @@ pre.document-content {
 #download-qr-button {
   margin-top: 1rem;
 }
+
 .document-content {
   overflow-wrap: anywhere;
 }
@@ -121,4 +122,15 @@ pre.document-content {
   margin-left: 0;
   padding-left: 1rem;
   border-left: 0.25rem solid color-mix(in srgb, CanvasText 25%, Canvas);
+}
+
+.file-loader {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px dashed color-mix(in srgb, CanvasText 25%, Canvas);
+  border-radius: 0.75rem;
+}
+
+.file-loader h3 {
+  margin-top: 0;
 }

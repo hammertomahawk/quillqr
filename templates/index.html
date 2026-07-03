@@ -16,6 +16,21 @@
     <section class="card">
       <h2>Create stored document</h2>
 
+      <section class="file-loader">
+        <h3>Load from file</h3>
+
+        <label>
+          Text or Markdown file
+          <input
+            id="document-file"
+            type="file"
+            accept=".txt,.md,.markdown,text/plain,text/markdown,text/x-markdown"
+          >
+        </label>
+
+        <p id="file-status" class="status"></p>
+      </section>
+
       <label>
         Title
         <input id="title" type="text" maxlength="120">
@@ -50,40 +65,44 @@
       <p id="status" class="status"></p>
     </section>
 
-	<section id="result" class="card hidden">
-	  <h2>Created</h2>
+    <section id="result" class="card hidden">
+      <h2>Created</h2>
 
-	  <p>
-		Public link:
-		<a id="public-link" href=""></a>
-	  </p>
+      <p>
+        Public link:
+        <a id="public-link" href=""></a>
+      </p>
 
-	  <div class="qr-panel">
-		<h3>QR Code</h3>
+      <div class="qr-panel">
+        <h3>QR Code</h3>
 
-		<div id="qr-code" class="qr-code"></div>
+        <div id="qr-code" class="qr-code"></div>
 
-		<button id="download-qr-button" type="button">
-		  Download QR PNG
-		</button>
-	  </div>
+        <button id="download-qr-button" type="button">
+          Download QR PNG
+        </button>
+      </div>
 
-	  <p>
-		Secret edit link:
-		<a id="edit-link" href=""></a>
-	  </p>
+      <p>
+        Secret edit link:
+        <a id="edit-link" href=""></a>
+      </p>
 
-	  <p class="warning">
-		Save the secret edit link. Anyone with it can edit
-		this document. If you lose it, the document can still
-		be viewed but cannot be edited.
-	  </p>
-	</section>
+      <p class="warning">
+        Save the secret edit link. Anyone with it can edit
+        this document. If you lose it, the document can still
+        be viewed but cannot be edited.
+      </p>
+    </section>
   </main>
 
-	<script
-	  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
-	></script>
-	<script src="/static/app.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+  <script>
+    window.QUILLQR_MAX_CONTENT_BYTES = {{ max_content_bytes | tojson }};
+  </script>
+  <script src="/static/file_loader.js?v=1"></script>
+  <script src="/static/app.js?v=1"></script>
 </body>
 </html>

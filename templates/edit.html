@@ -25,6 +25,21 @@
         for another 90 days.
       </p>
 
+      <section class="file-loader">
+        <h3>Replace content from file</h3>
+
+        <label>
+          Text or Markdown file
+          <input
+            id="document-file"
+            type="file"
+            accept=".txt,.md,.markdown,text/plain,text/markdown,text/x-markdown"
+          >
+        </label>
+
+        <p id="file-status" class="status"></p>
+      </section>
+
       <label>
         Title
         <input
@@ -69,28 +84,35 @@
       <p id="status" class="status"></p>
     </section>
 
-	<div
-	  class="qr-panel"
-	  data-qr-payload="{{ public_url }}"
-	  data-qr-name="quillqr-document-qr.png"
-	>
-	  <h2>Public QR Code</h2>
+    <section
+      class="card qr-panel"
+      data-qr-payload="{{ public_url }}"
+      data-qr-name="quillqr-document-qr.png"
+    >
+      <h2>Public QR Code</h2>
 
-	  <div class="qr-code"></div>
+      <p class="meta">
+        This QR code opens the public view-only version of this document.
+        It does not include your secret edit link.
+      </p>
 
-	  <button class="download-qr-button" type="button">
-		Download QR PNG
-	  </button>
-	</div>
+      <div class="qr-code"></div>
+
+      <button class="download-qr-button" type="button">
+        Download QR PNG
+      </button>
+    </section>
   </main>
 
   <script>
     window.QUILLQR_EDIT_TOKEN = {{ edit_token | tojson }};
+    window.QUILLQR_MAX_CONTENT_BYTES = {{ max_content_bytes | tojson }};
   </script>
-	<script
-	  src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
-	></script>
-	<script src="/static/page_qr.js"></script>
-	<script src="/static/edit.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+  <script src="/static/page_qr.js?v=1"></script>
+  <script src="/static/file_loader.js?v=1"></script>
+  <script src="/static/edit.js?v=1"></script>
 </body>
 </html>
