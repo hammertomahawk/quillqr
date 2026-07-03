@@ -58,6 +58,7 @@ def create_app() -> Flask:
         x_for=1,
         x_proto=1,
         x_host=1,
+        x_port=1,
     )
 
     register_routes(app)
@@ -187,20 +188,43 @@ def get_json_body() -> dict:
     return body
 
 
-def public_document_url(read_slug: str) -> str:
+def get_public_base_url() -> str | None:
+    value = os.environ.get("QUILLQR_PUBLIC_BASE_URL")
+
+    if not value:
+        return None
+
+    return value.rstrip("/")
+
+
+def build_public_url(path: str) -> str:
+    base_url = get_public_base_url()
+
+    if base_url is not None:
+        return f"{ base_url }{ path }"
+
     return url_for(
+        "index",
+        _external=True,
+    ).rstrip("/") + path
+
+
+def public_document_url(read_slug: str) -> str:
+    path = url_for(
         "view_document",
         read_slug=read_slug,
-        _external=True,
     )
+
+    return build_public_url(path)
 
 
 def edit_document_url(edit_token: str) -> str:
-    return url_for(
+    path = url_for(
         "edit_document",
         edit_token=edit_token,
-        _external=True,
     )
+
+    return build_public_url(path)
 
 
 def renew_document_by_id(document_id: int) -> None:
