@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Upload PDF — {{ app_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page">
+    <p>
+      <a href="/">QuillQR</a>
+    </p>
+
+    <section class="card">
+      <h1>Upload PDF</h1>
+
+      <p class="meta">
+        This trusted link creates a PDF-only QuillQR document.
+        Only PDFs with real selectable text are accepted.
+      </p>
+
+      {% if allow_unsanitized %}
+        <p class="warning">
+          Local testing mode: PDFs are not being sanitized.
+          Do not enable this mode in production.
+        </p>
+      {% endif %}
+
+      <label>
+        PDF file
+        <input
+          id="pdf-file"
+          type="file"
+          accept=".pdf,application/pdf"
+        >
+      </label>
+
+      <p id="size-note">
+        Max PDF size: {{ max_pdf_bytes }} bytes
+      </p>
+
+      {% if require_selectable_text %}
+        <p class="meta">
+          The uploaded PDF must have selectable text on at least
+          {{ "%.0f"|format(min_text_page_percent) }}% of pages.
+          Pages count when they contain at least
+          {{ text_page_min_chars }} compact text character(s).
+          Image-only/scanned PDFs are rejected.
+        </p>
+      {% endif %}
+
+      <button id="upload-button" type="button">
+        Upload PDF
+      </button>
+
+      <p id="status" class="status"></p>
+    </section>
+
+    <section id="result" class="card hidden">
+      <h2>Created</h2>
+
+      <p>
+        Public PDF link:
+        <a id="public-link" href=""></a>
+      </p>
+
+      <div class="qr-panel">
+        <h3>QR Code</h3>
+
+        <div id="qr-code" class="qr-code"></div>
+
+        <button id="download-qr-button" type="button">
+          Download QR PNG
+        </button>
+      </div>
+
+      <p>
+        Secret PDF edit link:
+        <a id="edit-link" href=""></a>
+      </p>
+
+      <p class="warning">
+        Save the secret edit link. Anyone with it can replace
+        the PDF. If you lose it, the PDF can still be viewed
+        but cannot be edited.
+      </p>
+    </section>
+  </main>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+  <script>
+    window.QUILLQR_MAX_PDF_BYTES = {{ max_pdf_bytes | tojson }};
+  </script>
+  <script src="/static/pdf_create.js?v=3"></script>
+</body>
+</html>

@@ -84,7 +84,8 @@ pre.document-content {
   height: 256px;
 }
 
-#download-qr-button {
+#download-qr-button,
+.download-qr-button {
   margin-top: 1rem;
 }
 
@@ -133,4 +134,32 @@ pre.document-content {
 
 .file-loader h3 {
   margin-top: 0;
+}
+
+.pdf-viewer {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 75vh;
+  border: 1px solid color-mix(in srgb, CanvasText 20%, Canvas);
+  border-radius: 0.75rem;
+}
+
+.pdf-actions {
+  margin-bottom: 0;
+}
+
+.document-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1rem;
+}
+
+.document-facts dt {
+  font-weight: 700;
+}
+
+.document-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
 }

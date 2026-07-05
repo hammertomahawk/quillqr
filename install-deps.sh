@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-apt install nginx -y
+apt install nginx ghostscript -y
