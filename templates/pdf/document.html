@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>
+    {% if document["title"] %}
+      {{ document["title"] }} — {{ app_name }}
+    {% else %}
+      PDF Document — {{ app_name }}
+    {% endif %}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page pdf-page">
+    <p>
+      <a href="/">QuillQR</a>
+    </p>
+
+    <article class="card">
+      {% if document["title"] %}
+        <h1>{{ document["title"] }}</h1>
+      {% else %}
+        <h1>PDF Document</h1>
+      {% endif %}
+
+      <p class="meta">
+        PDF: {{ document["original_filename"] }}
+        — {{ document["file_size_bytes"] }} bytes
+        — {{ document["page_count"] }} pages
+      </p>
+
+      <object
+        class="pdf-viewer"
+        data="{{ file_url }}"
+        type="application/pdf"
+      >
+        <p>
+          This browser cannot display the PDF inline.
+          <a href="{{ file_url }}">Open PDF</a>
+        </p>
+      </object>
+
+      <p class="pdf-actions">
+        <a href="{{ file_url }}">Open PDF directly</a>
+      </p>
+    </article>
+
+    <section
+      class="card qr-panel"
+      data-qr-payload="{{ public_url }}"
+      data-qr-name="quillqr-pdf-qr.png"
+    >
+      <h2>Share this PDF</h2>
+
+      <p>
+        Public link:
+        <a href="{{ public_url }}">{{ public_url }}</a>
+      </p>
+
+      <div class="qr-code"></div>
+
+      <button class="download-qr-button" type="button">
+        Download QR PNG
+      </button>
+    </section>
+  </main>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+  <script src="/static/page_qr.js?v=1"></script>
+</body>
+</html>

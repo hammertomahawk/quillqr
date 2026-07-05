@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Edit PDF — {{ app_name }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <main class="page">
+    <p>
+      <a href="/">QuillQR</a>
+    </p>
+
+    <section class="card">
+      <h1>Edit PDF Document</h1>
+
+      <p>
+        Public PDF link:
+        <a href="{{ public_url }}">{{ public_url }}</a>
+      </p>
+
+      <p class="warning">
+        Opening this secret edit link renews the PDF document
+        for another 90 days.
+      </p>
+
+      {% if allow_unsanitized %}
+        <p class="warning">
+          Local testing mode: replacement PDFs are not being sanitized.
+          Do not enable this mode in production.
+        </p>
+      {% endif %}
+
+      <dl class="document-facts">
+        <dt>Current file</dt>
+        <dd>{{ document["original_filename"] }}</dd>
+
+        <dt>Size</dt>
+        <dd>{{ document["file_size_bytes"] }} bytes</dd>
+
+        <dt>Pages</dt>
+        <dd>{{ document["page_count"] }}</dd>
+
+        <dt>Selectable text</dt>
+        <dd>
+          {{ document["text_page_count"] }} /
+          {{ document["page_count"] }} pages
+          ({{ "%.0f"|format(document["text_page_percent"]) }}%),
+          {{ document["text_char_count"] }} compact chars
+        </dd>
+
+        <dt>Safety status</dt>
+        <dd>{{ document["safety_status"] }}</dd>
+      </dl>
+
+      <label>
+        Replacement PDF
+        <input
+          id="pdf-file"
+          type="file"
+          accept=".pdf,application/pdf"
+        >
+      </label>
+
+      <p id="size-note">
+        Max PDF size: {{ max_pdf_bytes }} bytes
+      </p>
+
+      {% if require_selectable_text %}
+        <p class="meta">
+          The replacement PDF must have selectable text on at least
+          {{ "%.0f"|format(min_text_page_percent) }}% of pages.
+          Pages count when they contain at least
+          {{ text_page_min_chars }} compact text character(s).
+          Image-only/scanned PDFs are rejected.
+        </p>
+      {% endif %}
+
+      <button id="upload-button" type="button">
+        Replace PDF
+      </button>
+
+      <p id="status" class="status"></p>
+    </section>
+
+    <section
+      class="card qr-panel"
+      data-qr-payload="{{ public_url }}"
+      data-qr-name="quillqr-pdf-qr.png"
+    >
+      <h2>Public QR Code</h2>
+
+      <p class="meta">
+        This QR code opens the public view-only PDF page.
+        It does not include your secret edit link.
+      </p>
+
+      <div class="qr-code"></div>
+
+      <button class="download-qr-button" type="button">
+        Download QR PNG
+      </button>
+    </section>
+  </main>
+
+  <script>
+    window.QUILLQR_PDF_EDIT_TOKEN = {{ edit_token | tojson }};
+    window.QUILLQR_MAX_PDF_BYTES = {{ max_pdf_bytes | tojson }};
+  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+  ></script>
+  <script src="/static/page_qr.js?v=1"></script>
+  <script src="/static/pdf_edit.js?v=3"></script>
+</body>
+</html>

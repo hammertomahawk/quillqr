@@ -5,3 +5,5 @@ instance/
 *.sqlite3
 .env
 logs/
+tmp/
+*.service.local
