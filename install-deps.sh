@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-apt install nginx ghostscript -y
+apt install nginx ghostscript clamav -y
