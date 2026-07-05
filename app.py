@@ -128,6 +128,25 @@ PDF_EXTRA_COLUMNS = {
     "safety_status": "TEXT NOT NULL DEFAULT 'unverified'",
 }
 
+def format_file_size(bytes_count: int) -> str:
+    mb = bytes_count / (1024 * 1024)
+
+    if mb >= 1:
+        if mb.is_integer():
+            return f"{ int(mb) } MB"
+
+        return f"{ mb:.1f } MB"
+
+    kb = bytes_count / 1024
+
+    if kb >= 1:
+        if kb.is_integer():
+            return f"{ int(kb) } KB"
+
+        return f"{ kb:.1f } KB"
+
+    return f"{ bytes_count } bytes"
+
 
 @dataclass(frozen=True)
 class PdfProcessingResult:
@@ -1276,6 +1295,9 @@ def register_routes(app: Flask) -> None:
             "pdf/index.html",
             app_name=APP_NAME,
             max_pdf_bytes=current_app.config["MAX_PDF_BYTES"],
+            max_pdf_size_label = format_file_size(
+                    current_app.config["MAX_PDF_BYTES"]
+                ),
             require_selectable_text=current_app.config[
                 "PDF_REQUIRE_SELECTABLE_TEXT"
             ],
@@ -1407,6 +1429,9 @@ def register_routes(app: Flask) -> None:
             edit_token=edit_token,
             public_url=public_pdf_document_url(row["read_slug"]),
             max_pdf_bytes=current_app.config["MAX_PDF_BYTES"],
+            max_pdf_size_label = format_file_size(
+                    current_app.config["MAX_PDF_BYTES"]
+                ),
             require_selectable_text=current_app.config[
                 "PDF_REQUIRE_SELECTABLE_TEXT"
             ],
