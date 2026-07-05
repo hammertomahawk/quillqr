@@ -6,3 +6,4 @@ instance/
 .env
 logs/
 tmp/
+*.service.local

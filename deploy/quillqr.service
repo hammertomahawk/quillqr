@@ -1,0 +1,45 @@
+# deploy/quillqr.service.example
+[Unit]
+Description=QuillQR Gunicorn service
+After=network.target
+
+[Service]
+Type=simple
+
+User=<quillqr_user>
+Group=<quillqr_user>
+
+WorkingDirectory=<quillqr_path>
+
+Environment=QUILLQR_PUBLIC_BASE_URL=https://<URI>
+Environment=QUILLQR_ENABLE_PDF_UPLOADS=0
+Environment=QUILLQR_PDF_UPLOAD_CODE_HASH=<GEN_HASH>
+Environment=QUILLQR_PDF_SANITIZER_COMMAND=gs
+Environment=QUILLQR_REQUIRE_SELECTABLE_TEXT=1
+Environment=QUILLQR_MIN_PDF_TEXT_PAGE_PERCENT=60
+Environment=QUILLQR_PDF_TEXT_PAGE_MIN_CHARS=1
+Environment=QUILLQR_PDF_AV_SCAN_COMMAND=
+Environment=QUILLQR_REQUIRE_PDF_AV_SCAN=0
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+
+ExecStart=<quillqr_path>/.venv/bin/gunicorn \
+  --no-control-socket \
+  -w 1 \
+  --threads 2 \
+  -b 127.0.0.1:8000 \
+  --access-logfile - \
+  --error-logfile - \
+  app:app
+
+Restart=on-failure
+RestartSec=3
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=<quillqr_path>/instance <quillqr_path>/tmp
+
+[Install]
+WantedBy=multi-user.target
